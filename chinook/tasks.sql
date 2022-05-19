@@ -46,7 +46,7 @@ select * from chinook."Customer"
 limit 10;
 
 -- Select first name from Customer and sort result set in ascending order
-select * from chinook."Customer" cu
+select cu."FirstName" from chinook."Customer" cu
 order by cu."FirstName" asc;
 
 /* 2.3 INSERT INTO */
