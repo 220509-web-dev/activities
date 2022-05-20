@@ -115,3 +115,15 @@ from "Artist" ar
 cross join "Album" a
 order by ar."Name" desc;
 
+-- Task 4.4
+
+select * from "Employee" e;
+select A."FirstName", 
+A."LastName",
+B."FirstName" , 
+B."LastName", 
+A."ReportsTo"
+from "Employee" A, "Employee" B
+where A."EmployeeId" <> B."EmployeeId"
+and A."ReportsTo" = B."ReportsTo"
+order by A."ReportsTo";
