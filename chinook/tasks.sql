@@ -225,7 +225,7 @@ from chinook."MediaType";
 */
 select length("Name"), "Name"
 from chinook."MediaType";
--- Apparently, using an aliase doesn't work with LENGTH
+-- Apparently, using an alias doesn't work with LENGTH
 
 
 /* 3.2 System Defined Aggregate Functions */
