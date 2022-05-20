@@ -76,3 +76,42 @@ select current_time;
 
 select length("Name") from "MediaType" mt;
 
+-- Task 3.2
+
+select avg("Total") from "Invoice" i ;
+select max("Total") from "Invoice" i ;
+
+-- Task 4.0
+
+select c."FirstName",
+c."LastName",
+i."InvoiceId" 
+from "Customer" c 
+inner join "Invoice" i 
+on c."CustomerId" = i."CustomerId" ;
+
+-- Task 4.1
+
+select c."FirstName",
+c."LastName",
+i."InvoiceId",
+i."Total" 
+from "Invoice" i 
+full outer join "Customer" c
+on c."CustomerId" = i."CustomerId" ; 
+
+-- Task 4.2
+
+select ar."Name",
+al."Title"
+from "Artist" ar
+right join "Album" al
+on ar."ArtistId" = al."ArtistId";
+
+-- Task 4.3
+
+select ar."Name"
+from "Artist" ar
+cross join "Album" a
+order by ar."Name" desc;
+
