@@ -70,8 +70,9 @@ where "CustomerId" = 32;
 delete from "Customer" 
 where "CustomerId" = 32;
 
--- Task 3.0
+-- Task 3.1
 
 select current_time;
 
-select length("Name") from "MediaType" mt ;
+select length("Name") from "MediaType" mt;
+
