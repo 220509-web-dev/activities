@@ -52,6 +52,9 @@ where "BillingAddress" like '%T%';
 select * from "Invoice" i 
 where "Total" between 15 and 50;
 
+select * from "Employee" e  
+where "HireDate" between '2003-06-01' and '2004-03-01';
+
 -- Task 2.7
 
 delete from "InvoiceLine"
@@ -68,3 +71,7 @@ delete from "Customer"
 where "CustomerId" = 32;
 
 -- Task 3.0
+
+select current_time;
+
+select length("Name") from "MediaType" mt ;
