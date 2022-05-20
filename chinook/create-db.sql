@@ -18,6 +18,7 @@ order by "Title" desc;
 select "FirstName" from "Customer"
 order by "FirstName" asc;
 
+
 select "GenreId" from "Genre" g
 order by g."GenreId" desc;
 
@@ -32,3 +33,11 @@ values (9, 'Moch', 'Richard', 'Software Engineer', null, 'United States', 'richa
 (10, 'McBoatface', 'Boaty', 'Lead Boat', null, 'United Kingdom', 'boaty.mcboatface@noc.ac.uk');
 
 -- Task 2.4
+
+update "Customer"  
+set "LastName" = 'Walter', "FirstName"='Robert'
+where "CustomerId" = 32;
+
+update "Artist" 
+set "Name" = "CCR"
+where "ArtistId" = 76;
