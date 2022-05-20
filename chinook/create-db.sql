@@ -41,3 +41,30 @@ where "CustomerId" = 32;
 update "Artist" 
 set "Name" = "CCR"
 where "ArtistId" = 76;
+
+-- Task 2.5
+
+select * from "Invoice" i 
+where "BillingAddress" like '%T%';
+
+-- Task 2.6
+
+select * from "Invoice" i 
+where "Total" between 15 and 50;
+
+-- Task 2.7
+
+delete from "InvoiceLine"
+where "InvoiceId" in (
+select "InvoiceId"
+from "Invoice" 
+where "CustomerId" = 32
+);
+
+delete from "Invoice" 
+where "CustomerId" = 32;
+
+delete from "Customer" 
+where "CustomerId" = 32;
+
+-- Task 3.0
