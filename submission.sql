@@ -32,26 +32,36 @@ update "Artist" set "Name" = 'CCR' where "Name" = 'Creedence Clearwater Revival'
 select * from "Invoice" where "BillingAddress" like 'T%';
 
 --Task – Select all invoices that have a total between 15 and 50
+select * from "Invoice" where "Total" between 15 and 20;
 
 --Task – Select all employees hired between 1st of June 2003 and 1st of March 2004
+select * from "Employee" where "HireDate" between '2003-06-01' and '2004-03-01';
 
 --Task – Delete a record in Customer table where the name is Robert Walter (There may be constraints that rely on this, find out how to resolve them).
+alter table "Invoice" drop constraint "FK_InvoiceCustomerId"; delete from "Customer" where "CustomerId" = 32;
 
 --Task – Create a query that leverages a system-defined function to return the current time.
+select current_time;
 
 --Task – Create a query that leverages a system-defined function to return the length of a mediatype from the mediatype table
+select "Name", length("Name") as LengthOfName from "MediaType";
 
 --Task – Create a query that leverages a system-defined function to return the average total of all invoices
+select avg("Total") from "Invoice"; 
 
 --Task – Create a query that leverages a system-defined function to return the most expensive trackf
+select max("UnitPrice") from "Track"; 
 
 --Task – Create an inner join that joins customers and orders and specifies the name of the customer and the invoiceId.
+select "FirstName" from "Customer" inner join "Invoice" on "Customer."FirstName" = "invoice"."invoiceId";
 
+select * from "Customer";
+select * from "Invoice";
 --Task – Create an outer join that joins the customer and invoice table, specifying the CustomerId, firstname, last name, invoiceId, and total.
 
 --Task – Create a right join that joins album and artist specifying artist name and title.
 
---Task – Create a cross join that joins album and artist and sorts by artist name in ascending order.
+--Task – Create a cross join that joins album and artist and srts by artist name in ascending order.
 
 --Task – Perform a self-join on the employee table, joining on the reports to column.
 
