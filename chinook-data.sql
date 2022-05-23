@@ -51,6 +51,7 @@ select * from "Invoice" where "Total" between 15 and 50;
 --select all employees hired between 1st of june and 1st of march
 select * from "Employee" where "HireDate" between '2003-06-01' and '2004-03-01';
 
-
+-- delete a record in customer
+delete from "Customer" where "FirstName" = 'Robert';
 
 
