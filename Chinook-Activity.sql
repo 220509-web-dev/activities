@@ -69,20 +69,78 @@ WHERE e."HireDate" >= '2003-06-01' and e."HireDate" <= '2004-03-01';
 
 -- Task � Delete a record in Customer table where the name is Robert Walter (There may be constraints that rely on this, find out how to resolve them).
 
--- I REALLY TRIED TO DO IT ANOTHER WAY THIS WAS THE ONLY WAY I COULD GET IT!
+delete from "InvoiceLine"
+where "InvoiceId" in (
+select "InvoiceId"
+from "Invoice" 
+where "CustomerId" = 32
+);
 
-delete from "InvoiceLine" where "Invoice"  (50, 61, 116, 245, 268, 290, 342);  
+delete from "Invoice" 
+where "CustomerId" = 32;
 
-delete from "Invoice" where "CustomerId" =32;
-
-delete from "Customer"
-where "FirstName" = 'Robert' and "LastName" = 'Walter';
+delete from "Customer" 
+where "CustomerId" = 32;
 
 -- Task - Create a query that leverages a system-defined function to return the current time.
 
+select current_time;
+
 -- Task � Create a query that leverages a system-defined function to return the length of a mediatype from the mediatype table
+
+select length("Name") from "MediaType" mt;
 
 -- Task � Create a query that leverages a system-defined function to return the average total of all invoices
 
+select avg("Total") from "Invoice" i ;
+
 -- Task � Create a query that leverages a system-defined function to return the most expensive trackf
 
+select max("Total") from "Invoice" i ;
+
+-- Task � Create an inner join that joins customers and orders and specifies the name of the customer and the invoiceId.
+
+select c."FirstName",
+c."LastName",
+i."InvoiceId" 
+from "Customer" c 
+inner join "Invoice" i 
+on c."CustomerId" = i."CustomerId" ;
+
+-- Task � Create an outer join that joins the customer and invoice table, specifying the CustomerId, firstname, last name, invoiceId, and total.
+
+select c."FirstName",
+c."LastName",
+i."InvoiceId",
+i."Total" 
+from "Invoice" i 
+full outer join "Customer" c
+on c."CustomerId" = i."CustomerId" ; 
+
+-- Task � Create a right join that joins album and artist specifying artist name and title.
+
+select ar."Name",
+al."Title"
+from "Artist" ar
+right join "Album" al
+on ar."ArtistId" = al."ArtistId";
+
+-- Task � Create a cross join that joins album and artist and sorts by artist name in ascending order.
+
+select ar."Name"
+from "Artist" ar
+cross join "Album" a
+order by ar."Name" desc;
+
+-- Task � Perform a self-join on the employee table, joining on the reports to column.
+
+select * from "Employee" e;
+select A."FirstName", 
+A."LastName",
+B."FirstName" , 
+B."LastName", 
+A."ReportsTo"
+from "Employee" A, "Employee" B
+where A."EmployeeId" <> B."EmployeeId"
+and A."ReportsTo" = B."ReportsTo"
+order by A."ReportsTo";
