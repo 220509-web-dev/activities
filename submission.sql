@@ -53,17 +53,18 @@ select avg("Total") from "Invoice";
 select max("UnitPrice") from "Track"; 
 
 --Task – Create an inner join that joins customers and orders and specifies the name of the customer and the invoiceId.
-select "FirstName" from "Customer" inner join "Invoice" on "Customer."FirstName" = "invoice"."invoiceId";
+select * from "Customer" inner join "Invoice" on "Customer"."CustomerId" = "Invoice"."CustomerId";
 
-select * from "Customer";
-select * from "Invoice";
 --Task – Create an outer join that joins the customer and invoice table, specifying the CustomerId, firstname, last name, invoiceId, and total.
+select * from "Customer" full join "Invoice" ON "Customer"."CustomerId", "Customer"."FirstName" , "Customer"."LastName" = "Invoice"."InvoiceId" , "Invoice"."Total";
 
 --Task – Create a right join that joins album and artist specifying artist name and title.
+select * from "Album" right join "Artist" on "Album"."Title" = "Artist"."Name";
 
 --Task – Create a cross join that joins album and artist and srts by artist name in ascending order.
 
 --Task – Perform a self-join on the employee table, joining on the reports to column.
+select "ReportsTo" as reportsto, "ReportsTo" as reports from "Employee" e, "Employee" e2 where "ReportsTo" <> "ReportsTo";
 
 
 
