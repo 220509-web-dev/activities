@@ -131,9 +131,9 @@ set search_path to chinook;
 	--Task – Perform a self-join on the employee table, joining on the reports to column.
 	select * from "Employee" e ;
 
-	select e."FirstName", e."LastName", e."ReportsTo", e2."FirstName", e2."LastName", e2."ReportsTo"
+	select e."FirstName", e."LastName", e."ReportsTo", e2."FirstName", e2."LastName"
 	from "Employee" e 
 	join "Employee" e2 
-	on e."ReportsTo" = e2."ReportsTo"; 
+	on e2."EmployeeId" = e."ReportsTo";  
 	
 	
