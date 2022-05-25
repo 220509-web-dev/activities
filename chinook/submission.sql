@@ -51,8 +51,14 @@ select * from "Employee" where "HireDate" between '2003-06-01' and '2004-03-01';
 select * from "Customer";
 
 -- 3.1 System Defined Functions
+-- Task – Create a query that leverages a system-defined function to return the current time.
+select now ();
+-- Task – Create a query that leverages a system-defined function to return the length of a mediatype from the mediatype table
 
 -- 3.2 System Defined Aggregate Functions
+-- Task – Create a query that leverages a system-defined function to return the average total of all invoices
+
+-- Task – Create a query that leverages a system-defined function to return the most expensive track
 
 
 -- 4.1 INNER
