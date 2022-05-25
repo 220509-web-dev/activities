@@ -62,9 +62,9 @@ select * from "Customer" full join "Invoice" ON "Customer"."CustomerId", "Custom
 select * from "Album" right join "Artist" on "Album"."Title" = "Artist"."Name";
 
 --Task – Create a cross join that joins album and artist and srts by artist name in ascending order.
-
+select * from "Album" cross join "Artist" order by "Name" asc;
 --Task – Perform a self-join on the employee table, joining on the reports to column.
-select "ReportsTo" as reportsto, "ReportsTo" as reports from "Employee" e, "Employee" e2 where "ReportsTo" <> "ReportsTo";
+select * from "Employee" e2  join "Employee" e on e2."ReportsTo" = e."ReportsTo";
 
 
 
