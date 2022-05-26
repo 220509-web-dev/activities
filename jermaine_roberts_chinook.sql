@@ -76,14 +76,14 @@ WHERE "ArtistId"=76;
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --2.5 LIKE .1) Task Select all invoices with a billing address like %T%
 
-SELECT all "InvoiceId", "CustomerId", "InvoiceDate", "BillingAddress", "BillingCity", "BillingState", "BillingCountry", "BillingPostalCode", "Total"
+SELECT *
 FROM "Invoice"
 WHERE "BillingAddress" LIKE '%T%';
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --2.6 BETWEEN .1) Task Select all invoices that have a total between 15 and 50
 
-select all "InvoiceId", "CustomerId", "InvoiceDate", "BillingAddress", "BillingCity", "BillingState", "BillingCountry", "BillingPostalCode", "Total"
+select *
 FROM "Invoice"
 WHERE "Total" BETWEEN 15 AND 50;
 
@@ -190,5 +190,3 @@ INNER JOIN "Employee" m ON m."EmployeeId" = e."ReportsTo"
 ORDER BY "reportsTo";
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-
