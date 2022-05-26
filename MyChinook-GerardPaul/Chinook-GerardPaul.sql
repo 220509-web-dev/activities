@@ -49,5 +49,54 @@ update "Artist" set "Name" = "CCR" where "ArtistId" = 76;
 --Task-Select all invoices with a billing address like "T"
 select * from "Invoice" i
 where "BillingAddress" like '%T%';
-	
+
+--2.6 BETWEEN
+
+--Task-Select all invoices that have a total between 15 and 50
+select * from "Invoice" j 
+where "Total" between 15 and 50;
+
+--Task-Select all employees hired between 1st of June 2003 and 1st of March 2004.
+select * from "Employee" k
+where "HireDate" between '2003-06-01' and '2004-03-01';
+
+--2.7 DELETE
+
+/*--TASK-Delete a record in Customer table where the name is Robert Walter (There may be conrtraints that rely on this,
+find out how to resolve them). 
+**/
+
+--select * from "Customer";
+--where "CustomerId" =32;
+
+/*3.0 SQL FUNCTIONS 
+In this section you will be using the PostGreSQL system functions, as wekk as your own functions, to 
+perform various actions against the database..
+*/
+
+
+--3.1 SYSTEM DIFINED FUNCTIONS
+
+--Task-Create a query that leverages a system-defined function to return the current time.
+select current_timestamp;
+
+--Task-Create a query that leaverages a system-defined function to return the length of a mediatype from the mediatype table.
+select length("Name") from "MediaType" utc;
+
 commit;
+
+--3.2 SYSTEM DEFINED AGGREGATE FUNCTIONS 
+
+--Task-Create a query that leverages a system-defined function to return the average total of all invoices. 
+select avg("Total") from "Invoice" i;
+
+--Task-Create a query thaht leverages select avg("Total") from "Invoice" i;a system-defined function to return the most expensive track.
+select max("Total") from "Invoice" j;
+
+
+
+
+
+
+
+
