@@ -91,5 +91,5 @@ select * from "Album" a cross join "Artist" a2 order by "Name";
 
 -- 4.5 SELF
 -- Task – Perform a self-join on the employee table, joining on the reports to column.
-select * from "Employee" e , "Employee" e2 where e."ReportsTo" = e2."EmployeeId";
+select * from "Employee" e , "Employee" e2 where e."ReportsTo" = e2."EmployeeId"; 
 
