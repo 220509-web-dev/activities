@@ -54,26 +54,42 @@ select * from "Customer";
 -- Task – Create a query that leverages a system-defined function to return the current time.
 select now ();
 -- Task – Create a query that leverages a system-defined function to return the length of a mediatype from the mediatype table
+select * from "MediaType";
+select length("Name") from "MediaType";
+
 
 -- 3.2 System Defined Aggregate Functions
 -- Task – Create a query that leverages a system-defined function to return the average total of all invoices
-
+select * from "Invoice";
+select avg("Total") from "Invoice";
 -- Task – Create a query that leverages a system-defined function to return the most expensive track
+select max("Total") from "Invoice";
 
 
 -- 4.1 INNER
 -- Task – Create an inner join that joins customers and orders and specifies the name of the customer and the invoiceId.
+select * from "Customer";
+select * from "Invoice";
+select "FirstName", "LastName", "InvoiceId" from "Customer" c full outer join "Invoice" i ON c."CustomerId" = i."CustomerId";
+
 
 -- 4.2 OUTER
 -- Task – Create an outer join that joins the customer and invoice table, specifying the CustomerId, firstname, last name, invoiceId, and total.
+select "CustomerId", "FirstName", "LastName", "InvoiceId", "Total" from "Customer" full outer join "Invoice" ON "CustomerId" = "CustomerId";
+
 
 -- 4.3 RIGHT
 -- Task – Create a right join that joins album and artist specifying artist name and title.
+select * from "Album" a3 ;
+select * from "Artist" a3 ;
+select "Name", "Title" from "Album" a right join "Artist" a2 ON a."ArtistId" = a2."ArtistId";
+
 
 -- 4.4 CROSS
 -- Task – Create a cross join that joins album and artist and sorts by artist name in ascending order.
+select * from "Album" a cross join "Artist" a2 order by "Name";
 
 -- 4.5 SELF
 -- Task – Perform a self-join on the employee table, joining on the reports to column.
-
+select * from "Employee" e , "Employee" e2 where e."ReportsTo" = e2."EmployeeId";
 
