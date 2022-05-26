@@ -64,35 +64,67 @@
     where "HireDate" between '2003/06/1' and '2004/03/1'
 --### 2.7 DELETE
 --Task – Delete a record in Customer table where the name is Robert Walter (There may be constraints that rely on this, find out how to resolve them).
+    delete from "InvoiceLine"
+    where "InvoiceId" in (
+    select "InvoiceId"
+    from "Invoice" 
+    where "CustomerId" = 32
+    );
 
+    delete from "Invoice" 
+    where "CustomerId" = 32;
+
+    delete from "Customer" 
+    where "CustomerId" = 32;
 
 --### 3.0 SQL Functions
 --In this section you will be using the PostGreSQL system functions, as well as your own functions, to perform various actions against the database
 
 --### 3.1 System Defined Functions
 --Task – Create a query that leverages a system-defined function to return the current time.
-
+    select current_time;
 --Task – Create a query that leverages a system-defined function to return the length of a mediatype from the mediatype table
-
+    select length("Name") from "MediaType" mt;
 --### 3.2 System Defined Aggregate Functions
 --Task – Create a query that leverages a system-defined function to return the average total of all invoices
-
+    select avg("Total") from "Invoice" i;
 --Task – Create a query that leverages a system-defined function to return the most expensive trackf
-
+    select max("UnitPrice") from "Track" t; 
 --### 4.0 JOINS
 --In this section you will be working with combining various tables through the use of joins. You will work with outer, inner, right, left, cross, and self joins.
 
 --### 4.1 INNER
 --Task – Create an inner join that joins customers and orders and specifies the name of the customer and the invoiceId.
-
+    select c."FirstName",
+    c."LastName",
+    i."InvoiceId"
+    from "Customer" c
+    inner join "Invoice" i
+    on c."CustomerId" = i."CustomerId"; 
 --### 4.2 OUTER
 --Task – Create an outer join that joins the customer and invoice table, specifying the CustomerId, firstname, last name, invoiceId, and total.
-
+    select c."CustomerId" ,
+    c."FirstName",
+    c."LastName" ,
+    i."InvoiceId" ,
+    i."Total" 
+    from "Customer" c 
+    full outer join "Invoice" i 
+    on c."CustomerId" = i."CustomerId" ;
 ---### 4.3 RIGHT
 --Task – Create a right join that joins album and artist specifying artist name and title.
-
+    select a2."Name", a."Title" 
+    from "Album" a 
+    right join "Artist" a2 
+    on a."ArtistId" = a2."ArtistId";
 --### 4.4 CROSS
 --Task – Create a cross join that joins album and artist and sorts by artist name in ascending order.
-
+    select * 
+    from "Album" a 
+    cross join "Artist" a2 
+    order by a2."Name"; 
 --### 4.5 SELF
 --Task – Perform a self-join on the employee table, joining on the reports to column.
+    select *
+    from "Employee" e, "Employee" e2 
+    where e."ReportsTo" = e2."ReportsTo";
