@@ -52,6 +52,41 @@ select * from "Invoice" where "Total" between 15 and 50;
 select * from "Employee" where "HireDate" between '2003-06-01' and '2004-03-01';
 
 -- delete a record in customer
-delete from "Customer" where "FirstName" = 'Robert';
+alter table "Invoice" drop constraint "FK_InvoiceCustomerId";
+alter table "InvoiceLine" drop constraint "FK_InvoiceLineInvoiceId";
+
+alter table "Invoice" add constraint "FK_InvoiceCustomerId" FOREIGN KEY ("CustomerId") REFERENCES "Customer"("CustomerId") on DELETE cascade;
+ALTER TABLE "InvoiceLine" ADD CONSTRAINT "FK_InvoiceLineInvoiceId" FOREIGN KEY ("InvoiceId") REFERENCES "Invoice"("InvoiceId") on DELETE cascade;
+
+DELETE FROM "Customer"
+WHERE "CustomerId"=32;
+
+--Create a query that leverages a system-defined function to return the current time.
+select CURRENT_TIMESTAMP;
+select now();
+
+-- create a query that leverages a system-defined function to return the length of a mediatype
+select length("Name") from "MediaType";
+
+--create a query that leverages a system defiend function that returns the average invoices
+select sum("Total") from "Invoice";
+
+--create a query that returns the most expensive track
+select max("UnitPrice") from "Track";
+
+-- create inner join that joins customers and orders and specifies the name and invoice id
+select "FirstName", "LastName", "InvoiceId" from "Customer" cus join "Invoice" i on cus."CustomerId" = i."CustomerId";
+
+--create an outer join that joins customer and invoice table specifying the customer full name invoiceid and total
+select cus."CustomerId", "FirstName", "LastName", "InvoiceId", "Total" from "Customer" cus full outer join "Invoice" i on cus."CustomerId" = i."CustomerId";
+
+--create a right join that joins album and artitst specifying artist name and title
+select "Name", "Title" from "Album" al right join "Artist" ar on al."ArtistId" = ar."ArtistId";
+
+--create a cross join that joins album and artist and sorts by artist name in asc order 
+select * from "Album" cross join "Artist" order by "Name" asc;
+
+--Perform a self-join on the employee table, joining on the reports to column.
+select * from "Employee" Emp1, "Employee" Emp2 where Emp1."ReportsTo"  = Emp2."EmployeeId"; 
 
 
