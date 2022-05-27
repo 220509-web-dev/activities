@@ -93,9 +93,21 @@ select avg("Total") from "Invoice" i;
 --Task-Create a query thaht leverages select avg("Total") from "Invoice" i;a system-defined function to return the most expensive track.
 select max("Total") from "Invoice" j;
 
+--4.0 JOINS
+/*
+ * In this section you will be working with combining various tables through the use of joins. 
+ * you will work with outer,inner,right, left,cross,and self joins. 
+ */
 
+--4.1 INNER
+-- Task- Create an inner join that joins customers and orders specifies the name of the cusotmer and the invoiceId
+select i."FirstName",i."LastName", j."InvoiceId"
+from "Customer" i inner join "Invoice" j 
+on i."CustomerId" = j."CustomerId";
 
-
+--4.2 OUTER
+--Task-Create an outer join that joins the customer and invoice tabkle, specifying the customerId,
+--FirstName,LastName,InvoiceId, and Total. 
 
 
 
