@@ -1,0 +1,228 @@
+package dev.kimani.utils.daos;
+
+
+import dev.kimani.utils.entities.Player;
+import dev.kimani.utils.util.ConnectionUtil;
+
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+public class BasketballDaoPostgres implements BasketballDAO{
+
+    @Override
+    public Player createPlayer(Player player) {
+
+        // try connecting to database
+        try(Connection connection = ConnectionUtil.getConnection()) {
+            String sql = "insert into players values (?, ?, ?, ?, ?, ?, ?)";
+
+            // set the sql code variable as the prepared statement to be passed to the database
+            PreparedStatement ps = connection.prepareStatement(sql);
+
+            // set new entry column values
+            ps.setInt(1, player.getId());
+            ps.setInt(2, player.getPlayerNumber());
+            ps.setString(3, player.getFirstName());
+            ps.setString(4, player.getLastName());
+            ps.setString(5, player.getUsername());
+            ps.setString(6, player.getPassword());
+            ps.setString(7, player.getPosition());
+
+            // Execute the prepared statement to create new player
+            ps.execute();
+
+            //get the generated primary key value
+            ResultSet rs = ps.getGeneratedKeys();
+            // read result values
+            rs.next();
+            // get the generated id from database column 'id'
+            int generatedId = rs.getInt("id");
+
+            // set the player objects id to the retrieved generated id from the database
+            player.setId(generatedId);
+
+            // return the new player object
+            return player;
+
+
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+        // Otherwise, return null
+        return null;
+    }
+
+    @Override
+    public Player getPlayerById(int id) {
+
+        try(Connection connection = ConnectionUtil.getConnection()) {
+            String sql = "select * from players where id = ?";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+
+            rs.next();
+
+            Player player = new Player();
+            player.setId(id);
+            player.setPlayerNumber(rs.getInt("player_number"));
+            player.setFirstName(rs.getString("first_name"));
+            player.setLastName(rs.getString("last_name"));
+            player.setUsername(rs.getString("username"));
+            player.setPassword(rs.getString("password"));
+            player.setPosition(rs.getString("position"));
+            return player;
+
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public Player getPlayerByUsername(String username) {
+        try(Connection connection = ConnectionUtil.getConnection()) {
+            String sql = "select * from players where username = ?";
+            assert connection != null;
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, username);
+            ResultSet rs = ps.executeQuery();
+
+            rs.next();
+
+            Player player = new Player();
+            player.setId(rs.getInt("id"));
+            player.setPlayerNumber(rs.getInt("player_number"));
+            player.setFirstName(rs.getString("first_name"));
+            player.setLastName(rs.getString("last_name"));
+            player.setUsername(rs.getString("username"));
+            player.setPassword(rs.getString("password"));
+            player.setPosition(rs.getString("position"));
+            return player;
+
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public List<Player> getAllPlayers() {
+
+        try(Connection connection = ConnectionUtil.getConnection()){
+            String sql = "select * from players";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+            List<Player> players =new ArrayList<Player>();
+
+            while (rs.next()){
+                Player player = new Player();
+                player.setId(rs.getInt("id"));
+                player.setPlayerNumber(rs.getInt("player_number"));
+                player.setFirstName(rs.getString("first_name"));
+                player.setLastName(rs.getString("last_name"));
+                player.setUsername(rs.getString("username"));
+                player.setPassword(rs.getString("password"));
+                player.setPosition(rs.getString("position"));
+                players.add(player);
+            }
+
+            return players;
+
+
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public Player updatePlayer(Player player) {
+
+        try(Connection connection = ConnectionUtil.getConnection()) {
+            String sql = "update players set player_number = ?, first_name = ?, last_name = ?, username = ?, password = ?,  position = ?";
+            assert connection != null;
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, player.getPlayerNumber());
+            ps.setString(2, player.getFirstName());
+            ps.setString(3, player.getLastName());
+            ps.setString(4, player.getUsername());
+            ps.setString(5, player.getPassword());
+            ps.setString(6, player.getPosition());
+
+            ps.execute();
+
+            ps.executeQuery();
+
+            ResultSet rs = ps.getResultSet();
+
+
+
+            player.setId(rs.getInt("id"));
+            player.setPlayerNumber(rs.getInt("player_number"));
+            player.setFirstName(rs.getString("first_name"));
+            player.setLastName(rs.getString("last_name"));
+            player.setUsername(rs.getString("username"));
+            player.setPassword(rs.getString("password"));
+            player.setPosition(rs.getString("position"));
+
+            return player;
+
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        } catch (NullPointerException exception) {
+            exception.printStackTrace();
+        }
+        return null;
+    }
+
+
+
+    @Override
+    public void deletePlayerById(int id) {
+
+        try(Connection connection = ConnectionUtil.getConnection()) {
+            String sql = "delete from players where id = ?";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, id);
+            ps.execute();
+
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+
+    }
+
+    @Override
+    public void resetTable() {
+
+        try(Connection connection = ConnectionUtil.getConnection()) {
+
+
+            BufferedReader reader = new BufferedReader(new FileReader("src/main/resources/basketball-mock-data.sql"));
+            Statement statement = connection.createStatement();
+            int counter = 0;
+            String line = null;
+            while((line = reader.readLine()) != null) {
+                statement.execute(line);
+            }
+
+
+
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+}

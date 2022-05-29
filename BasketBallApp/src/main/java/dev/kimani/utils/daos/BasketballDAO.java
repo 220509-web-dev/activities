@@ -1,0 +1,26 @@
+package dev.kimani.utils.daos;
+
+import dev.kimani.utils.entities.Player;
+
+import java.util.List;
+
+public interface BasketballDAO {
+
+    //Create
+    Player createPlayer(Player player);
+
+    //Read
+    Player getPlayerById(int id);
+    Player getPlayerByUsername(String username);
+    List<Player> getAllPlayers();
+
+    //Update
+    Player updatePlayer(Player player);
+
+
+    //Delete
+    void deletePlayerById(int id);
+
+    //Testing
+    void resetTable();
+}
