@@ -16,14 +16,9 @@ class BasketballDaoPostgresTest {
 
     static BasketballDaoPostgres basketballDaoPostgres = new BasketballDaoPostgres();
 
-    @AfterEach
-    void tearDown() {
-        resetTable();
-    }
-
     @Test
     void getPlayerById() {
-        Player player = basketballDaoPostgres.getPlayerById(4);
+        Player player = basketballDaoPostgres.getPlayerById(14);
         if(player.getFirstName().isEmpty()) {
             Logger logger = new Logger();
             logger.log("getPlayerById Test failed. No player first name found.", LogLevel.ERROR);
@@ -60,44 +55,5 @@ class BasketballDaoPostgresTest {
         }
     }
 
-    @Test
-    void updatePlayer() {
-        Player player = new Player(0, 7, "Test", "McTest", "Tester","Testing", "C");
-        basketballDaoPostgres.updatePlayer(player);
-        Player newPlayer = basketballDaoPostgres.getPlayerByUsername("Tester");
-        if(newPlayer.getFirstName().isEmpty()) {
-            Logger logger = new Logger();
-            logger.log("updatePlayer Test failed. No player first name found.", LogLevel.ERROR);
-        }  else {
-            Logger logger2 = new Logger();
-            logger2.log("updatePlayer Test Passed!", LogLevel.DEBUG);
-        }
-        Assertions.assertEquals(7, newPlayer.getPlayerNumber());
-    }
-
-    @Test
-    void resetTable() {
-        basketballDaoPostgres.resetTable();
-        String expectedTable = "[Player{id=1, playerNumber=23, firstName='Michael', lastName='Jordan', username='mjordan', password='jumpman23', position='SG'}\n" +
-                ", Player{id=2, playerNumber=30, firstName='Stephen', lastName='Curry', username='scurry', password='splashbro', position='PG'}\n" +
-                ", Player{id=3, playerNumber=2, firstName='Kawhi', lastName='Leonard', username='kleonard', password='kltheclaw', position='C'}\n" +
-                ", Player{id=4, playerNumber=6, firstName='Lebron', lastName='James', username='ljames', password='kingjames', position='SF'}\n" +
-                ", Player{id=5, playerNumber=7, firstName='Kevin', lastName='Durant', username='kdurant', password='durantula', position='PF'}\n" +
-                "]";
-        if(basketballDaoPostgres.getAllPlayers().toString() == expectedTable) {
-            Logger logger = new Logger();
-            logger.log("resetTable Test failed. No player first name found.", LogLevel.ERROR);
-        }  else {
-            Logger logger2 = new Logger();
-            logger2.log("resetTable Test Passed!", LogLevel.DEBUG);
-        }
-        Assertions.assertEquals("[Player{id=1, playerNumber=23, firstName='Michael', lastName='Jordan', username='mjordan', password='jumpman23', position='SG'}\n" +
-                ", Player{id=2, playerNumber=30, firstName='Stephen', lastName='Curry', username='scurry', password='splashbro', position='PG'}\n" +
-                ", Player{id=3, playerNumber=2, firstName='Kawhi', lastName='Leonard', username='kleonard', password='kltheclaw', position='C'}\n" +
-                ", Player{id=4, playerNumber=6, firstName='Lebron', lastName='James', username='ljames', password='kingjames', position='SF'}\n" +
-                ", Player{id=5, playerNumber=7, firstName='Kevin', lastName='Durant', username='kdurant', password='durantula', position='PF'}\n" +
-                "]", basketballDaoPostgres.getAllPlayers().toString());
-
-    }
 }
 

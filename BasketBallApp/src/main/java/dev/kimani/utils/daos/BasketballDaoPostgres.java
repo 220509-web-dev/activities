@@ -11,28 +11,27 @@ import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class BasketballDaoPostgres implements BasketballDAO{
+
 
     @Override
     public Player createPlayer(Player player) {
 
         // try connecting to database
-        try(Connection connection = ConnectionUtil.getConnection()) {
-            String sql = "insert into players values (?, ?, ?, ?, ?, ?, ?)";
+        try(Connection connection = ConnectionUtil.getInstance().getConnection()) {
+            String sql = "INSERT INTO players VALUES ( ?, ?, ?, ?, ?, ?)";
 
             // set the sql code variable as the prepared statement to be passed to the database
             PreparedStatement ps = connection.prepareStatement(sql);
 
             // set new entry column values
-            ps.setInt(1, player.getId());
-            ps.setInt(2, player.getPlayerNumber());
-            ps.setString(3, player.getFirstName());
-            ps.setString(4, player.getLastName());
-            ps.setString(5, player.getUsername());
-            ps.setString(6, player.getPassword());
-            ps.setString(7, player.getPosition());
+            ps.setInt(1, player.getPlayerNumber());
+            ps.setString(2, player.getFirstName());
+            ps.setString(3, player.getLastName());
+            ps.setString(4, player.getUsername());
+            ps.setString(5, player.getPassword());
+            ps.setString(6, player.getPosition());
 
             // Execute the prepared statement to create new player
             ps.execute();
@@ -58,11 +57,14 @@ public class BasketballDaoPostgres implements BasketballDAO{
         return null;
     }
 
+
+
     @Override
     public Player getPlayerById(int id) {
 
-        try(Connection connection = ConnectionUtil.getConnection()) {
-            String sql = "select * from players where id = ?";
+        try(Connection connection = ConnectionUtil.getInstance().getConnection()) {
+            String sql = "SELECT * FROM players WHERE id = ?";
+            assert connection != null;
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
@@ -87,9 +89,8 @@ public class BasketballDaoPostgres implements BasketballDAO{
 
     @Override
     public Player getPlayerByUsername(String username) {
-        try(Connection connection = ConnectionUtil.getConnection()) {
-            String sql = "select * from players where username = ?";
-            assert connection != null;
+        try(Connection connection = ConnectionUtil.getInstance().getConnection()) {
+            String sql = "SELECT * FROM players WHERE username = ?";
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setString(1, username);
             ResultSet rs = ps.executeQuery();
@@ -107,6 +108,7 @@ public class BasketballDaoPostgres implements BasketballDAO{
             return player;
 
         } catch (SQLException exception) {
+            System.err.println("An error occurred within BasketballDaoPostgres");
             exception.printStackTrace();
         }
         return null;
@@ -115,8 +117,8 @@ public class BasketballDaoPostgres implements BasketballDAO{
     @Override
     public List<Player> getAllPlayers() {
 
-        try(Connection connection = ConnectionUtil.getConnection()){
-            String sql = "select * from players";
+        try(Connection connection = ConnectionUtil.getInstance().getConnection()){
+            String sql = "SELECT * FROM players";
             PreparedStatement ps = connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
 
@@ -138,16 +140,17 @@ public class BasketballDaoPostgres implements BasketballDAO{
 
 
         } catch (SQLException exception) {
+            System.err.println("An error occurred within BasketballDaoPostgres");
             exception.printStackTrace();
         }
         return null;
     }
 
     @Override
-    public Player updatePlayer(Player player) {
+    public void updatePlayer(Player player) {
 
-        try(Connection connection = ConnectionUtil.getConnection()) {
-            String sql = "update players set player_number = ?, first_name = ?, last_name = ?, username = ?, password = ?,  position = ?";
+        try(Connection connection = ConnectionUtil.getInstance().getConnection()) {
+            String sql = "UPDATE players SET player_number = ?, first_name = ?, last_name = ?, username = ?, password = ?,  position = ?";
             assert connection != null;
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setInt(1, player.getPlayerNumber());
@@ -159,28 +162,9 @@ public class BasketballDaoPostgres implements BasketballDAO{
 
             ps.execute();
 
-            ps.executeQuery();
-
-            ResultSet rs = ps.getResultSet();
-
-
-
-            player.setId(rs.getInt("id"));
-            player.setPlayerNumber(rs.getInt("player_number"));
-            player.setFirstName(rs.getString("first_name"));
-            player.setLastName(rs.getString("last_name"));
-            player.setUsername(rs.getString("username"));
-            player.setPassword(rs.getString("password"));
-            player.setPosition(rs.getString("position"));
-
-            return player;
-
-        } catch (SQLException exception) {
-            exception.printStackTrace();
-        } catch (NullPointerException exception) {
+        } catch (SQLException | NullPointerException exception) {
             exception.printStackTrace();
         }
-        return null;
     }
 
 
@@ -188,7 +172,7 @@ public class BasketballDaoPostgres implements BasketballDAO{
     @Override
     public void deletePlayerById(int id) {
 
-        try(Connection connection = ConnectionUtil.getConnection()) {
+        try(Connection connection = ConnectionUtil.getInstance().getConnection()) {
             String sql = "delete from players where id = ?";
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setInt(1, id);
@@ -203,23 +187,18 @@ public class BasketballDaoPostgres implements BasketballDAO{
     @Override
     public void resetTable() {
 
-        try(Connection connection = ConnectionUtil.getConnection()) {
+        try(Connection connection = ConnectionUtil.getInstance().getConnection()) {
 
 
             BufferedReader reader = new BufferedReader(new FileReader("src/main/resources/basketball-mock-data.sql"));
             Statement statement = connection.createStatement();
-            int counter = 0;
-            String line = null;
+            String line;
             while((line = reader.readLine()) != null) {
                 statement.execute(line);
             }
 
-
-
         } catch (SQLException exception) {
             exception.printStackTrace();
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

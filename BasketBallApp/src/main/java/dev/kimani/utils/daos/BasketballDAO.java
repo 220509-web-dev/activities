@@ -6,8 +6,8 @@ import java.util.List;
 
 public interface BasketballDAO {
 
-    //Create
-    Player createPlayer(Player player);
+//    //Create
+//    Player createPlayer(Player player);
 
     //Read
     Player getPlayerById(int id);
@@ -15,7 +15,10 @@ public interface BasketballDAO {
     List<Player> getAllPlayers();
 
     //Update
-    Player updatePlayer(Player player);
+    void updatePlayer(Player player);
+
+
+
 
 
     //Delete

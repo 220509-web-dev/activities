@@ -1,6 +1,5 @@
 package dev.kimani.utils.app;
 
-import dev.kimani.utils.daos.BasketballDAO;
 import dev.kimani.utils.daos.BasketballDaoPostgres;
 import dev.kimani.utils.entities.Player;
 
@@ -11,16 +10,16 @@ public class BasketBallSQLApp {
 
     public static void main(String[] args) throws SQLException {
         //Create an instance of the DAO interface
-        BasketballDAO basketballDAO = new BasketballDaoPostgres();
-        basketballDAO.resetTable();
+        BasketballDaoPostgres basketballDAO = new BasketballDaoPostgres();
+//        basketballDAO.resetTable();
 
         //Get player by id
-        //Player player = basketballDAO.getPlayerById(5);
-        //System.out.println(player);
+        Player player = basketballDAO.getPlayerById(14);
+        System.out.println(player);
 
         //Get player by username
-        //Player player1 = basketballDAO.getPlayerByUsername("mjordan");
-        //System.out.println(player1);
+//        Player player1 = basketballDAO.getPlayerByUsername("mjordan");
+//        System.out.println(player1);
 
 
         //Create a new player ('Kobe' already created, must add new information to run)
@@ -30,8 +29,8 @@ public class BasketBallSQLApp {
         //System.out.println(mamba);
 
         //Get all players
-        List<Player> allPlayers = basketballDAO.getAllPlayers();
-        System.out.println(allPlayers);
+//        List<Player> allPlayers = basketballDAO.getAllPlayers();
+//        System.out.println(allPlayers);
 
 
 

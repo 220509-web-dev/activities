@@ -37,6 +37,15 @@ public class Player {
         this.position = position;
     }
 
+    public Player(int playerNumber, String firstName, String lastName, String username, String password, String position) {
+        this.playerNumber = playerNumber;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.username = username;
+        this.password = password;
+        this.position = position;
+    }
+
     public int getId() {
         return id;
     }
