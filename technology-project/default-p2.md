@@ -1,4 +1,4 @@
-# Java Enterprise Foundations Project Requirements
+# Technology Project Requirements
 
 ## Project Description
 
